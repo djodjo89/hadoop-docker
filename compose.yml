@@ -1,0 +1,10 @@
+services:
+  hadoop:
+    build: .
+    command: /scripts/entrypoint.sh && tail -f /dev/null
+    container_name: hadoop
+    env_file: .env
+    volumes:
+      - ./hadoop:/hadoop
+      - ./scripts/entrypoint.sh:/scripts/entrypoint.sh
+    working_dir: /hadoop
