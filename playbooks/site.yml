@@ -1,0 +1,46 @@
+---
+- name: ✨ install hadoop
+  hosts: localhost
+  connection: local
+  vars:
+    hdfs: $HADOOP_HOME/bin/hdfs
+    root: '{{ playbook_dir | dirname }}'
+    sbin: $HADOOP_HOME/sbin
+    venv: '{{ playbook_dir }}/venv'
+  tasks:
+    # https://stackoverflow.com/questions/56478867/how-do-i-check-whether-a-given-directory-is-empty-with-ansible#answer-56479790
+    - name: 👀 check if /hadoop is empty
+      find:
+        paths: /hadoop
+      register: hadoop_not_empty
+    - name: 📁➡️ 📁 copy hadoop folder
+      copy:
+        src: /hadoop-$HADOOP_VERSION/*
+        dest: /hadoop
+      when: hadoop_not_empty.matched == 0
+    - name: 🔐 start ssh init-d
+      command: /etc/init.d/ssh start
+    - name: 🔐 start ssh server
+      service:
+        name: ssh
+        state: started
+        use: service
+    - name: ✏️  format hadoop file system
+      command: '{{ hdfs }} namenode -format'
+      ignore_errors: true
+    - name: 🛑 stop hdfs server
+      command: '{{ sbin }}/stop-dfs.sh'
+    - name: 🏁 start hdfs server
+      command: '{{ sbin }}/start-dfs.sh'
+    - name: 🛑 stop yarn
+      command: '{{ sbin }}/stop-yarn.sh'
+    - name: 🧶 start yarn
+      command: '{{ sbin }}/start-yarn.sh'
+    - name: 📁 make directory /user
+      command: '{{ hdfs }} dfs -mkdir -p /user'
+    - name: "📁 make directory /user/root"
+      command: bash -c "{{ hdfs }} dfs -mkdir -p /user/root"
+    - name: 📁 make directory /input'
+      command: '{{ hdfs }} dfs -mkdir -p /input'
+    - name: 🗎  put file $HADOOP_HOME/etc/hadoop/*.xml in /input'
+      command: bash -c "{{ hdfs }} dfs -put -f $HADOOP_HOME/etc/hadoop/*.xml /input"

@@ -1,10 +1,24 @@
 services:
   hadoop:
-    build: .
-    command: /scripts/entrypoint.sh && tail -f /dev/null
+    build:
+      args:
+        ANSIBLE_VERSION: $ANSIBLE_VERSION
+        HADOOP_VERSION: $HADOOP_VERSION
+        JAVA_HOME: $JAVA_HOME
+      context: .
     container_name: hadoop
+    entrypoint:
+      - /scripts/entrypoint.sh
     env_file: .env
+    ports:
+      - 8088:8088
+      - 9000:9000
+      - 9864:9864
+      - 9870:9870
     volumes:
       - ./hadoop:/hadoop
-      - ./scripts/entrypoint.sh:/scripts/entrypoint.sh
+      - ./logs:/logs
+      - ./playbooks:/playbooks
+      - ./scripts:/scripts
+      - ./src:/src
     working_dir: /hadoop

@@ -1,5 +1,4 @@
-#!/bin/sh
-if [ -z "$(ls -A '/hadoop')" ]; then
-	cp -r /hadoop-3.3.6/* /hadoop
-fi
+#!/bin/bash
+. /tmp/venv/bin/activate
+ansible-playbook /playbooks/site.yml >> /logs/ansible.txt
 tail -f /dev/null

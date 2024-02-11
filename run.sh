@@ -1,3 +1,6 @@
 #!/bin/sh
-docker compose up --build -d
+if [ ! -f .env ]; then
+	cp .env.dev .env
+fi
+docker compose up --build --remove-orphans -d
 docker exec -it hadoop bash
