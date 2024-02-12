@@ -26,7 +26,7 @@
         state: started
         use: service
     - name: ✏️  format hadoop file system
-      command: '{{ hdfs }} namenode -format'
+      command: '{{ hdfs }} namenode -format -nonInteractive'
       ignore_errors: true
     - name: 🛑 stop hdfs server
       command: '{{ sbin }}/stop-dfs.sh'
