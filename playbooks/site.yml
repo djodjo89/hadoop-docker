@@ -28,19 +28,21 @@
     - name: ✏️  format hadoop file system
       command: '{{ hdfs }} namenode -format -nonInteractive'
       ignore_errors: true
-    - name: 🛑 stop hdfs server
-      command: '{{ sbin }}/stop-dfs.sh'
+        # - name: 🛑 stop hdfs server
+      # command: '{{ sbin }}/stop-dfs.sh'
     - name: 🏁 start hdfs server
       command: '{{ sbin }}/start-dfs.sh'
-    - name: 🛑 stop yarn
-      command: '{{ sbin }}/stop-yarn.sh'
+      ignore_errors: true
+        # - name: 🛑 stop yarn
+      # command: '{{ sbin }}/stop-yarn.sh'
     - name: 🧶 start yarn
-      command: '{{ sbin }}/start-yarn.sh'
+      command: '{{ sbin }}/start-yarn.sh &'
+      ignore_errors: true
     - name: 📁 make directory /user
       command: '{{ hdfs }} dfs -mkdir -p /user'
     - name: "📁 make directory /user/root"
       command: bash -c "{{ hdfs }} dfs -mkdir -p /user/root"
-    - name: 📁 make directory /input'
-      command: '{{ hdfs }} dfs -mkdir -p /input'
-    - name: 🗎  put file $HADOOP_HOME/etc/hadoop/*.xml in /input'
-      command: bash -c "{{ hdfs }} dfs -put -f $HADOOP_HOME/etc/hadoop/*.xml /input"
+    - name: 📁 make directory input'
+      command: '{{ hdfs }} dfs -mkdir -p input'
+    - name: 🗎  put file $HADOOP_HOME/etc/hadoop/*.xml in input'
+      command: bash -c "{{ hdfs }} dfs -put -f $HADOOP_HOME/etc/hadoop/*.xml input"

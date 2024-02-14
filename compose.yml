@@ -6,8 +6,8 @@ services:
         HADOOP_VERSION: $HADOOP_VERSION
         JAVA_HOME: $JAVA_HOME
       context: .
-    command: /scripts/entrypoint.sh
     container_name: hadoop
+    entrypoint: sh -c '/scripts/entrypoint.sh'
     env_file: .env
     ports:
       - 8088:8088
