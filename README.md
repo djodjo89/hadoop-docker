@@ -10,7 +10,7 @@ chmod u+x ./run.sh
 ```
 ## start project
 ### beware !
-it may be necessary to wait a bit less than a minute before being able to use the machine
+it may be necessary to wait a bit less than a minute before being able to use the machine (on the first run, expect a ten-minute long start, which corresponds to time necessary to copy hadoop files)
 ### command
 this command should open a hadoop terminal  
 ```console

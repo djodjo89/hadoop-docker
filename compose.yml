@@ -6,7 +6,6 @@ services:
         HADOOP_VERSION: $HADOOP_VERSION
         JAVA_HOME: $JAVA_HOME
       context: .
-    command: /scripts/wait-for-it.sh -h localhost -p 8032 -- echo 'yarn is running' -t 64
     container_name: hadoop
     entrypoint: sh -c '/scripts/entrypoint.sh'
     env_file: .env
