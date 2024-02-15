@@ -9,6 +9,9 @@ it may be required to chmod the run file
 chmod u+x ./run.sh
 ```
 ## start project
+### beware !
+it may be necessary to wait a bit less than a minute before being able to use the machine
+### command
 this command should open a hadoop terminal  
 ```console
 ./run.sh`

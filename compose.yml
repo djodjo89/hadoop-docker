@@ -6,15 +6,19 @@ services:
         HADOOP_VERSION: $HADOOP_VERSION
         JAVA_HOME: $JAVA_HOME
       context: .
+    command: /scripts/wait-for-it.sh -h localhost -p 8032 -- echo 'yarn is running' -t 64
     container_name: hadoop
     entrypoint: sh -c '/scripts/entrypoint.sh'
     env_file: .env
     ports:
+      - 8042:8042
       - 8088:8088
       - 9000:9000
       - 9864:9864
       - 9870:9870
     volumes:
+      - ./cfg:/cfg
+      - ./data:/data
       - ./hadoop:/hadoop
       - ./logs:/logs
       - ./playbooks:/playbooks

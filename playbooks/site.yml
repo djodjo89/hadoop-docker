@@ -18,6 +18,26 @@
         src: /hadoop-$HADOOP_VERSION/*
         dest: /hadoop
       when: hadoop_not_empty.matched == 0
+    - name: 🗎 ➡️ 🗎 copy hadoop config core-site.xml
+      copy:
+        src: /cfg/core-site.xml
+        dest: /hadoop/etc/hadoop/core-site.xml
+    - name: 🗎 ➡️ 🗎 copy hadoop config hdfs-site.xml
+      copy:
+        src: /cfg/hdfs-site.xml
+        dest: /hadoop/etc/hadoop/hdfs-site.xml
+    - name: 🗎 ➡️ 🗎 copy hadoop config hadoop-env.sh
+      copy:
+        src: /cfg/hadoop-env.sh
+        dest: /hadoop/etc/hadoop/hadoop-env.sh
+    - name: 🗎 ➡️ 🗎 copy hadoop config mapred-site.xml
+      copy:
+        src: /cfg/mapred-site.xml
+        dest: /hadoop/etc/hadoop/mapred-site.xml
+    - name: 🗎 ➡️ 🗎 copy hadoop config yarn-site.xml
+      copy:
+        src: /cfg/yarn-site.xml
+        dest: /hadoop/etc/hadoop/yarn-site.xml
     - name: 🔐 start ssh init-d
       command: /etc/init.d/ssh start
     - name: 🔐 start ssh server
@@ -42,7 +62,7 @@
       command: '{{ hdfs }} dfs -mkdir -p /user'
     - name: "📁 make directory /user/root"
       command: bash -c "{{ hdfs }} dfs -mkdir -p /user/root"
-    - name: 📁 make directory input'
+    - name: 📁 make directory input
       command: '{{ hdfs }} dfs -mkdir -p input'
     - name: 🗎  put file $HADOOP_HOME/etc/hadoop/*.xml in input'
       command: bash -c "{{ hdfs }} dfs -put -f $HADOOP_HOME/etc/hadoop/*.xml input"
