@@ -6,7 +6,8 @@ Docker and its Compose plugins must be installed
 ## installation
 it may be required to chmod the run file  
 ```console
-chmod u+x ./run.sh
+git clone https://github.com/djodjo89/hadoop-docker.git
+chmod -R 755 .
 ```
 ## start project
 ### beware !
